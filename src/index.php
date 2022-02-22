@@ -27,10 +27,16 @@
 			$pdo = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
 	 
 			$username = $_POST["user"];
-			$pass = $_POST["password"];
+			$password = $_POST["password"];
 			# (2.1) creem el string de la consulta (query)
-			$qstr = "SELECT * FROM users WHERE name='$username' AND password=SHA2('$pass',512);";
+			#$qstr = "SELECT * FROM users WHERE name='$username' AND password=SHA2('$pass',512);";
+			$qstr = "SELECT * FROM users WHERE name=:user AND password=SHA2(:pass,512);"; #consulta amb format per bindValue
 			$consulta = $pdo->prepare($qstr);
+
+			$consulta->bindValue("user", $username);
+			$consulta->bindValue("pass", $password);
+
+			#utilitzem bindValue per evitar injeccions SQL
 
 			# mostrem la SQL query per veure el què s'executarà (a mode debug)
 			echo "<br>$qstr<br>";

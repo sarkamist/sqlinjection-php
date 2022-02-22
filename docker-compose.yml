@@ -21,7 +21,7 @@ services:
       MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
       # descomentar si volem una DB amb persistència
-      - db:/var/lib/mysql
+      #- db:/var/lib/mysql
       - ./sqlscripts:/docker-entrypoint-initdb.d
 volumes:
   db:
